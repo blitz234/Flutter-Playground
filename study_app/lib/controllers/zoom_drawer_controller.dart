@@ -1,11 +1,15 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_zoom_drawer/config.dart';
 import 'package:get/get.dart';
+import 'package:study_app/controllers/auth_controller.dart';
 
 class MyZoomDrawerController extends GetxController {
   final zoomDrawerController = ZoomDrawerController();
+  Rxn<User?> user = Rxn();
 
   @override
   void onReady() {
+    user.value = Get.find<AuthController>().getUser();
     super.onReady();
   }
 
@@ -14,7 +18,10 @@ class MyZoomDrawerController extends GetxController {
     update();
   }
 
-  void signOut() {}
+  void signOut() {
+    Get.find<AuthController>().signOut();
+    Get.offAllNamed('/home');
+  }
 
   void signIn() {}
 

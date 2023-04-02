@@ -5,6 +5,8 @@ import 'package:study_app/firebase_ref/references.dart';
 import 'package:study_app/models/question_paper_model.dart';
 import 'package:study_app/services/firebase_storage_service.dart';
 
+import '../../screen/question/question_screen.dart';
+
 class QuestionPaperController extends GetxController {
   final allPaperImages = <String>[].obs;
   final allPaper = <QuestionPaperModel>[].obs;
@@ -42,9 +44,11 @@ class QuestionPaperController extends GetxController {
     if (_authController.isLoggedIn()) {
       if (tryAgain) {
         Get.back();
+        Get.toNamed(QuestionScreen.routeName,
+            arguments: paper, preventDuplicates: false);
         //Get.offNamed();
       } else {
-        // PGet.toNamed();
+        Get.toNamed(QuestionScreen.routeName, arguments: paper);
       }
     } else {
       _authController.showLoginAlertDialog();

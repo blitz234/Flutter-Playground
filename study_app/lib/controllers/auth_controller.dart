@@ -43,7 +43,7 @@ class AuthController extends GetxController {
         await saveUser(account);
 
         if (_user.value != null) {
-          Get.back();
+          Get.offAllNamed('/home');
         }
       }
     } on FirebaseAuthException catch (e) {
@@ -57,6 +57,19 @@ class AuthController extends GetxController {
       "name": account.displayName,
       "profilePic": account.photoUrl,
     });
+  }
+
+  User? getUser() {
+    _user.value = _auth.currentUser;
+    return _user.value;
+  }
+
+  Future<void> signOut() async {
+    try {
+      await _auth.signOut();
+    } on FirebaseAuthException catch (e) {
+      debugPrint(e.message);
+    }
   }
 
   void navigateToIntroduction() {

@@ -6,6 +6,7 @@ import 'package:study_app/configs/themes/app_colors.dart';
 import 'package:study_app/configs/themes/app_icons.dart';
 import 'package:study_app/configs/themes/custom_text_styles.dart';
 import 'package:study_app/configs/themes/ui_parameter.dart';
+import 'package:study_app/controllers/auth_controller.dart';
 import 'package:study_app/controllers/question_paper/question_paper_controller.dart';
 import 'package:study_app/controllers/zoom_drawer_controller.dart';
 import 'package:study_app/screen/home/menu_screen.dart';
@@ -19,6 +20,12 @@ class HomeScreen extends GetView<MyZoomDrawerController> {
   Widget build(BuildContext context) {
     // instance of question paper controller that loads all the data for quizzes
     QuestionPaperController questionPaperController = Get.find();
+    AuthController authController = Get.find();
+    String userName() {
+      String userName = (authController.getUser()!.displayName) ?? "Friend";
+      return userName;
+    }
+
     // Ui starts here
     return Scaffold(
         body: Container(
@@ -61,10 +68,16 @@ class HomeScreen extends GetView<MyZoomDrawerController> {
                                   const Icon(
                                     AppIcons.peace,
                                   ),
-                                  Text(
-                                    "Hello Friend",
-                                    style: detailText.copyWith(
-                                        color: onSurfaceTextColor),
+                                  SizedBox(
+                                    width: Get.width * 0.4,
+                                    child: Flexible(
+                                      child: Text(
+                                        "Hello ${userName()}",
+                                        overflow: TextOverflow.ellipsis,
+                                        style: detailText.copyWith(
+                                            color: onSurfaceTextColor),
+                                      ),
+                                    ),
                                   )
                                 ],
                               ),
